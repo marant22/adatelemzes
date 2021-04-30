@@ -16,7 +16,7 @@ library(swirl)
 
 
 
-pokemons <- read_csv("C:/Users/VargaBalazs/Desktop/szabeadando/Pokemon.csv")
+pokemons <- read_csv("C:/Users/Netti/Documents/GitHub/adatelemzes/Pokemon.csv")
 pokemons
 
 
@@ -88,3 +88,47 @@ ggplot(types, aes(x=typeone, y= typetwo , fill = n))+
   scale_fill_distiller(palette = "Oranges", direction = 1)+
   theme_minimal()
 #Type 1-2 heat map
+
+
+
+#leiro statisztika
+summary(pokemons)
+
+points <- pokemons[6:11]
+cor(points)
+
+
+total <- pokemons[5]
+total
+legendary <- pokemons[13]
+kor <- cor(legendary,total)
+sqrt(kor)
+
+
+str(pokemons)
+gen <- pokemons[12]
+gen
+
+poke<- read.table("C:/Users/Netti/Documents/GitHub/adatelemzes/Pokemon.csv", sep=",", header=T)
+head(poke)
+
+reg <- lm(Total~Generation, data=pokemons)
+summary(reg)
+plot(Generation ~ Total, data=pokemons) 
+abline(reg)
+
+ggplot(pokemons, aes(x= Generation, y= Total)) + geom_point() + stat_smooth(method = "lm", col ="red")
+
+#generacionkent hany darab
+gbGenCount <- pokemons %>%
+  group_by(`Generation`)%>%
+  count()
+gbGenCount
+
+
+#generacionkenti pontok atlaga
+aggregate(pokemons[5:11], list(pokemons$Generation), count)
+
+#legendasok szama generacionkent
+aggregate(pokemons[13], list(pokemons$Generation), sum)
+
